@@ -29,16 +29,37 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:param",function(req,res){
   let webParam = req.params.param;
-  webParamDate = new Date().toUTCString();
+  webParamInt = parseInt(webParam);
+  webParamDate = new Date(webParamInt).toUTCString();
   
   if (webParam === "1451001600000"){
-  webParamInt = parseInt(webParam);
     res.json({ unix : webParamInt, utc: webParamDate})
   }
-  let unixParam = parseInt("1451001600000");
+  let unixParam = new Date(webParam).valueOf();
   res.json({unix : unixParam , utc : webParamDate});
 })
 
+
+/*
+app.get("/api/:date_string", (req, res) => {
+  let dateString = req.params.date_string;
+  
+  if (/\d{5,}/.test(dateString)) {
+    let dateInt = parseInt(dateString);
+    res.json({ unix: dateString, utc: new Date(dateInt).toUTCString() });
+  } 
+  else {
+    let dateObject = new Date(dateString);
+    if (dateObject.toString() === "Invalid Date") {
+      res.json({ error: "Invalid Date" });
+    } 
+    else 
+    {
+    res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
+    }
+  }
+});
+*/
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000 , function () {
