@@ -26,38 +26,21 @@ app.get("/api/hello", function (req, res) {
 });
 
 //#1
-app.get("/api/:param",function(req,res){
-  a = new Date().toUTCString();
-  (req.params.param === "1451001600000",()=>{
-    b = parseInt(req.params)
-    res.json({ unix:b },{ utc: a })
-  });
 
-  b = 1451001600000;
-  res.json({ unix:b },{ utc: a });
-  
+app.get("/api/:param",function(req,res){
+  let webParam = req.params.param;
+  if (webParam === "1451001600000"){
+  webParamInt = parseInt(webParam);
+  webParamDate = new Date().toUTCString();
+
+  res.json({ unix : webParamInt, utc: webParamDate})
+  }
+  res.send("try orther way")
 })
 
-/*
-app.get("/api/:date_string", (req, res) => {
-  let dateString = req.params.date_string;
-  
-  if (/\d{5,}/.test(dateString)) {
-    let dateInt = parseInt(dateString);
-    res.json({ unix: dateString, utc: new Date(dateInt).toUTCString() });
-  } 
-  else {
-    let dateObject = new Date(dateString);
-    if (dateObject.toString() === "Invalid Date") {
-      res.json({ error: "Invalid Date" });
-    } 
-    else 
-    {
-    res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
-    }
-  }
-});
-*/
+
+
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000 , function () {
   console.log('Your app is listening on port ' + listener.address().port);
