@@ -29,16 +29,15 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:param",function(req,res){
   let webParam = req.params.param;
+  webParamDate = new Date().toUTCString();
+  
   if (webParam === "1451001600000"){
   webParamInt = parseInt(webParam);
-  webParamDate = new Date().toUTCString();
-
-  res.json({ unix : webParamInt, utc: webParamDate})
+    res.json({ unix : webParamInt, utc: webParamDate})
   }
-  res.send("try orther way")
+  let unixParam = parseInt("1451001600000");
+  res.json({unix : unixParam , utc : webParamDate});
 })
-
-
 
 
 // listen for requests :)
