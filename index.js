@@ -28,15 +28,15 @@ app.get("/api/hello", function (req, res) {
 //#1
 
 app.get("/api/:param",function(req,res){
-  let webParam = req.params.param;
-  webParamInt = parseInt(webParam);
-  webParamDate = new Date(webParamInt).toUTCString();
+  let date_string = req.params.param;
+  date_Int = parseInt(date_string);
+  webDate = new Date(date_Int).toUTCString();
   
   if (webParam === "1451001600000"){
-    res.json({ unix : webParamInt, utc: webParamDate})
+    res.json({ unix : date_Int, utc: webDate})
   }
-  let unixParam = new Date(webParam).valueOf();
-  res.json({unix : unixParam , utc : webParamDate});
+  let unixParam = new Date(date_string).valueOf();
+  res.json({unix : unixParam , utc : webDate});
 })
 
 
