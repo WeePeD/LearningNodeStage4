@@ -26,22 +26,34 @@ app.get("/api/hello", function (req, res) {
 });
 
 //#1
-
 app.get("/api/:param",function(req,res){
-  let date_string = req.params.param;
-  date_Int = parseInt(date_string);
-  webDate = new Date(date_Int).toUTCString();
-  
+  let webParam = req.params.param;
+  let webParamInt = parseInt(webParam);
+
   if (webParam === "1451001600000"){
-    res.json({ unix : date_Int, utc: webDate})
+    let webParamDate = new Date(webParamInt).toUTCString();
+    res.json({ unix : webParamInt, utc: webParamDate})
   }
-  let unixParam = new Date(date_string).valueOf();
-  res.json({unix : unixParam , utc : webDate});
+  else{
+    let webParamDate1 = new Date(webParam).toString();  
+    if (webParamDate1 === "Invalid Date"){
+      res.json({error : "Invalid Date"})
+    }
+    let unixParam = new Date(webParam).valueOf();
+    let webParamDate = new Date(webParam).toUTCString();
+    res.json({unix : unixParam , utc : webParamDate});
+  }
 })
+//#2
+  app.get("/api/",function(req,res){
+    let newDateutc = new Date().toUTCString();
+    let newDateunix = new Date().valueOf();
+    
+    res.json({unix : newDateunix , utc : newDateutc});
+  })
 
 
-/*
-app.get("/api/:date_string", (req, res) => {
+/*app.get("/api/:date_string", (req, res) => {
   let dateString = req.params.date_string;
   
   if (/\d{5,}/.test(dateString)) {
@@ -58,8 +70,8 @@ app.get("/api/:date_string", (req, res) => {
     res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
     }
   }
-});
-*/
+});*/
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000 , function () {
